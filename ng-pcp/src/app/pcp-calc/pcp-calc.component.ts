@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CalculatorService } from '../calculator.service';
+import { FinanceData } from '../models/calculator';
+import { LoanRepaymentDetail } from '../models/loan-repayment-detail';
 
 @Component({
   selector: 'app-pcp-calc',
@@ -8,18 +11,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PcpCalcComponent implements OnInit {
 
-  pcpInput!: PcpInput;
-  result!: PcpResult;
+  pcpInput!: FinanceData;
+  result!: LoanRepaymentDetail;
   pcpFormGroup: FormGroup;
 
-  constructor() {
+  constructor(private calculator: CalculatorService) {
     this.pcpInput = this.getNewPcpInput();
     
     this.pcpFormGroup = new FormGroup({
       cost: new FormControl(1200, [Validators.required, Validators.min(0)]),
       gmfv: new FormControl(0, [Validators.min(0)]),
       months: new FormControl(36, [Validators.required, Validators.min(1)]),
-      interest: new FormControl(6.9, [Validators.required, Validators.min(0.01)]),
+      interest: new FormControl(6.9, [Validators.required, Validators.min(0)]),
       deposit: new FormControl(0, [Validators.min(0)]),
       dealer: new FormControl(0, [Validators.min(0)]),
     });
@@ -52,14 +55,10 @@ export class PcpCalcComponent implements OnInit {
   }
 
   submitForm(): void {
-    const result = this.pcpInput.cost / this.pcpInput.months;
-    this.result = {
-      totalCost: result,
-      interestCost: 100
-    };
+    this.result = this.calculator.getPcpRepaymentDetails(this.pcpInput);
   }
 
-  getNewPcpInput(): PcpInput {
+  getNewPcpInput(): FinanceData {
     return {
       cost: 0,
       gmfv: 0,
@@ -72,14 +71,7 @@ export class PcpCalcComponent implements OnInit {
 
 }
 
-export interface PcpInput {
-  cost: number,
-  gmfv: number,
-  months: number,
-  interest: number,
-  deposit: number,
-  dealer: number
-}
+
 
 export interface PcpResult {
   totalCost: number,

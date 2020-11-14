@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PcpResult } from '../pcp-calc/pcp-calc.component';
+import { LoanRepaymentDetail } from '../models/loan-repayment-detail';
 
 @Component({
   selector: 'app-pcp-result',
@@ -9,7 +9,7 @@ import { PcpResult } from '../pcp-calc/pcp-calc.component';
 export class PcpResultComponent implements OnInit {
 
   @Input()
-  result!: PcpResult;
+  result!: LoanRepaymentDetail;
 
   constructor() { }
 
