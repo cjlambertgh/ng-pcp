@@ -1,5 +1,26 @@
-<div>Repayment: {{result?.monthlyRepayment}}</div>
-<div>Total cost: {{result?.totalPayable}}</div>
+<div class="resultContent">
+    <div>Monthly Cost: {{result?.monthlyRepayment | currency:'GBP'}}</div>
+    <div>Total cost to buy: {{result?.totalPayable | currency:'GBP'}}</div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    PCP (Personal Contract Purchase) finance is a method of buying a car where you pay for a portion of the value over an agreed period of time.
+                    At the end of the term you can either pay the final value (GMFV) and own the car, or trade the car in and use any equity towards the cost of the next vehicle.
+                </p>
+                <p>
+                    Car leasing (lease hire or PCH) is similar to PCP however the car will usually be returned at the end of the agreement with no option to purchase.
+                </p>
+                <p>
+                    Simply enter the details above and your monthly payment will be calculated.
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <span>{{result | json}}</span>
 
