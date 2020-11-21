@@ -1,5 +1,7 @@
 <div class="container">
-    <h1>PCP Calculator</h1>
+    <H1>PCP Calculator</H1>
+    <p>Enter your details below to calculate your estimated PCP finance monthly payments</p>
+    <div class="well">
     <form [formGroup]="pcpFormGroup">
         <div class="form-group">
             <label for="cost">Cost</label>
@@ -33,6 +35,8 @@
         &nbsp;
         <button class="btn btn-info" (click)="resetForm()">Reset</button>
     </form>
-
+</div>
+    <app-ga-banner></app-ga-banner>
     <app-pcp-result [result]="result"></app-pcp-result>
+    <app-detail></app-detail>
 </div>

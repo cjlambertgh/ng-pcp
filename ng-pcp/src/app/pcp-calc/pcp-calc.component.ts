@@ -19,7 +19,7 @@ export class PcpCalcComponent implements OnInit {
     this.pcpInput = this.getNewPcpInput();
     
     this.pcpFormGroup = new FormGroup({
-      cost: new FormControl(1200, [Validators.required, Validators.min(0)]),
+      cost: new FormControl(12000, [Validators.required, Validators.min(0)]),
       gmfv: new FormControl(0, [Validators.min(0)]),
       months: new FormControl(36, [Validators.required, Validators.min(1)]),
       interest: new FormControl(6.9, [Validators.required, Validators.min(0)]),
@@ -45,7 +45,7 @@ export class PcpCalcComponent implements OnInit {
 
   resetForm(): void {
     this.pcpFormGroup.reset({
-      cost: 1200,
+      cost: 12000,
       gmfv: 0,
       months: 36,
       interest: 6.9,
