@@ -32,7 +32,6 @@ export class PcpCalcComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    console.log('init')
     this.pcpInput = this.getQuoteData();
     this.applyFormValues();
     if(this.validData(this.pcpInput)) {
