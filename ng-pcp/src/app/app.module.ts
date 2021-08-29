@@ -7,6 +7,7 @@ import { PcpResultComponent } from './pcp-result/pcp-result.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GaBannerComponent } from './ga-banner/ga-banner.component';
 import { DetailComponent } from './detail/detail.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DetailComponent } from './detail/detail.component';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

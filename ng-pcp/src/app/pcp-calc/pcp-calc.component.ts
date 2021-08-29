@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CalculatorService } from '../calculator.service';
 import { FinanceData } from '../models/calculator';
 import { LoanRepaymentDetail } from '../models/loan-repayment-detail';
@@ -15,7 +16,7 @@ export class PcpCalcComponent implements OnInit {
   result!: LoanRepaymentDetail;
   pcpFormGroup: FormGroup;
 
-  constructor(private calculator: CalculatorService) {
+  constructor(private calculator: CalculatorService, private route: ActivatedRoute, private router: Router) {
     this.pcpInput = this.getNewPcpInput();
     
     this.pcpFormGroup = new FormGroup({
@@ -31,6 +32,22 @@ export class PcpCalcComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.pcpInput = this.getQuoteData();
+    this.applyFormValues();
+    if(this.validData(this.pcpInput)) {
+      this.result = this.calculator.getPcpRepaymentDetails(this.pcpInput);
+    }
+  }
+  
+  private applyFormValues() {
+    this.pcpFormGroup.setValue({
+      cost: this.pcpInput.cost,
+      gmfv: this.pcpInput.gmfv,
+      months: this.pcpInput.months,
+      interest: this.pcpInput.interest,
+      deposit: this.pcpInput.deposit,
+      dealer: this.pcpInput.dealer
+    });
   }
 
   subscribeToFormEvents() {
@@ -55,6 +72,14 @@ export class PcpCalcComponent implements OnInit {
   }
 
   submitForm(): void {
+    this.router.navigate(['/result'], {queryParams: {
+      cost: this.pcpInput.cost,
+      gmfv: this.pcpInput.gmfv,
+      months: this.pcpInput.months,
+      interest: this.pcpInput.interest,
+      deposit: this.pcpInput.deposit,
+      dealer: this.pcpInput.dealer
+    }});
     this.result = this.calculator.getPcpRepaymentDetails(this.pcpInput);
   }
 
@@ -67,6 +92,28 @@ export class PcpCalcComponent implements OnInit {
       deposit: 0,
       dealer: 0
     };
+  }
+
+  private getQuoteData(): FinanceData {
+    const fromQuery = this.getNewPcpInput();
+    fromQuery.cost = this.route.snapshot.queryParams["cost"];
+    fromQuery.gmfv = this.route.snapshot.queryParams["gmfv"];
+    fromQuery.months = this.route.snapshot.queryParams["months"];
+    fromQuery.interest = this.route.snapshot.queryParams["interest"];
+    fromQuery.deposit = this.route.snapshot.queryParams["deposit"];
+    fromQuery.dealer = this.route.snapshot.queryParams["dealer"];
+
+    if(this.validData(fromQuery)) return fromQuery;
+
+    return this.getNewPcpInput();
+  }
+
+  private validData(obj: any): boolean {
+    for (var key in obj) {
+      if (!obj[key] || isNaN(obj[key]))
+          return false;
+  }
+  return true;
   }
 
 }
