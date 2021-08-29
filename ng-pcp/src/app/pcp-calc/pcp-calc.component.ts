@@ -38,7 +38,7 @@ export class PcpCalcComponent implements OnInit {
       this.result = this.calculator.getPcpRepaymentDetails(this.pcpInput);
     }
   }
-  
+
   private applyFormValues() {
     this.pcpFormGroup.setValue({
       cost: this.pcpInput.cost,
@@ -79,7 +79,7 @@ export class PcpCalcComponent implements OnInit {
       interest: this.pcpInput.interest,
       deposit: this.pcpInput.deposit,
       dealer: this.pcpInput.dealer
-    }});
+    }}).then(() => window.location.reload());
     this.result = this.calculator.getPcpRepaymentDetails(this.pcpInput);
   }
 
